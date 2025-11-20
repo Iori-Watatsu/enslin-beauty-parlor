@@ -120,3 +120,11 @@ if 'RAILWAY_STATIC_URL' in os.environ:
     
     # Static files via WhiteNoise
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Render.com deployment
+import os
+if 'RENDER' in os.environ:
+    ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+    # Static files
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
