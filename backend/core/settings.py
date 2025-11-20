@@ -95,3 +95,28 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    
+# Railway deployment settings
+import os
+import dj_database_url
+
+# Database
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+
+# Static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Security
+if 'RAILWAY_STATIC_URL' in os.environ:
+    ALLOWED_HOSTS = ['.railway.app', 'localhost', '127.0.0.1']
+    CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
+    
+    # Static files via WhiteNoise
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
