@@ -1,0 +1,62 @@
+[
+{
+    "model": "academy.course",
+    "pk": 1,
+    "fields": {
+        "name": "Advanced Makeup Artistry",
+        "description": "Master advanced makeup techniques for professional work",
+        "duration_weeks": 8,
+        "price": "7500.00",
+        "level": "ADVANCED",
+        "image_url": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400",
+        "curriculum": "Color Theory|Advanced Techniques|Special Effects|Business Skills",
+        "requirements": "Basic makeup knowledge required",
+        "is_active": true
+    }
+},
+{
+    "model": "academy.course",
+    "pk": 2,
+    "fields": {
+        "name": "Nail Technician Certificate",
+        "description": "Become a certified nail technician through hands-on training",
+        "duration_weeks": 6,
+        "price": "3500.00",
+        "level": "BEGINNER",
+        "image_url": "https://images.unsplash.com/photo-1607778835362-66d246bea575?w=400",
+        "curriculum": "Nail Anatomy|Manicure Techniques|Nail Art|Sanitation",
+        "requirements": "No experience required",
+        "is_active": true
+    }
+},
+{
+    "model": "academy.course",
+    "pk": 3,
+    "fields": {
+        "name": "Skincare Specialist Course",
+        "description": "Comprehensive training in facial treatments and skincare",
+        "duration_weeks": 10,
+        "price": "6000.00",
+        "level": "INTERMEDIATE",
+        "image_url": "https://images.unsplash.com/photo-1596704012031-3d84a30c0c60?w=400",
+        "curriculum": "Skin Analysis|Facial Techniques|Product Knowledge|Client Care",
+        "requirements": "Basic beauty knowledge",
+        "is_active": true
+    }
+},
+{
+    "model": "academy.course",
+    "pk": 4,
+    "fields": {
+        "name": "Hair Styling Masterclass",
+        "description": "Professional hair styling techniques for modern trends",
+        "duration_weeks": 8,
+        "price": "5000.00",
+        "level": "BEGINNER",
+        "image_url": "https://images.unsplash.com/photo-1595476108010-b4d1f102b1e1?w=400",
+        "curriculum": "Cutting Techniques|Styling Methods|Color Basics|Client Consultation",
+        "requirements": "No experience required",
+        "is_active": true
+    }
+}
+]

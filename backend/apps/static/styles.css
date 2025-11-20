@@ -1,0 +1,266 @@
+/* Enhanced Image Container Styles */
+.service-image,
+.course-image,
+.combo-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+.service-card:hover .service-image,
+.course-card:hover .course-image,
+.combo-card:hover .combo-image {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Ensure images never overflow */
+.image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+}
+
+/* Burger Menu Styles */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+    padding: 8px;
+    z-index: 1001;
+}
+
+.burger-menu span {
+    width: 25px;
+    height: 3px;
+    background: #333;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.mobile-nav.active {
+    display: flex;
+}
+
+.mobile-nav a {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a.active {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* Enhanced Button Styles */
+.ios-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 25px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    min-width: 140px;
+}
+
+.ios-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.ios-button:hover::before {
+    left: 100%;
+}
+
+.ios-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+}
+
+.ios-button:active {
+    transform: translateY(0) scale(0.98);
+    transition: all 0.1s;
+}
+
+.ios-button-secondary {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    box-shadow: none;
+}
+
+.ios-button-secondary:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* Category Filter Buttons */
+.category-filters {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.category-filter {
+    padding: 12px 24px;
+    border: 2px solid #e5e5e7;
+    background: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.category-filter:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.category-filter.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Service Type Buttons */
+.service-type-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.service-type-btn {
+    padding: 15px 25px;
+    border: 2px solid #e5e5e7;
+    background: white;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    flex: 1;
+    min-width: 150px;
+}
+
+.service-type-btn:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.service-type-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .category-filters {
+        gap: 8px;
+    }
+
+    .category-filter {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    .service-type-buttons {
+        flex-direction: column;
+    }
+
+    .service-type-btn {
+        min-width: auto;
+    }
+
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+
+    .section-title h2 {
+        font-size: 2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .hero-title {
+        font-size: 2rem !important;
+    }
+
+    .section-title h2 {
+        font-size: 1.8rem !important;
+    }
+
+    .ios-button {
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+}

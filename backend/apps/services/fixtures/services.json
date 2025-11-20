@@ -1,0 +1,80 @@
+[
+{
+    "model": "services.service",
+    "pk": 1,
+    "fields": {
+        "name": "Professional Hair Styling",
+        "category": "HAIR",
+        "description": "Expert haircuts, coloring, and styling for any occasion",
+        "duration": 60,
+        "price": "450.00",
+        "image_url": "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400",
+        "is_active": true
+    }
+},
+{
+    "model": "services.service",
+    "pk": 2,
+    "fields": {
+        "name": "Luxury Nail Art & Care",
+        "category": "NAILS",
+        "description": "Creative nail designs with premium products and care",
+        "duration": 45,
+        "price": "350.00",
+        "image_url": "https://images.unsplash.com/photo-1583305728936-39199cd8b69f?w=400",
+        "is_active": true
+    }
+},
+{
+    "model": "services.service",
+    "pk": 3,
+    "fields": {
+        "name": "Professional Makeup Artistry",
+        "category": "MAKEUP",
+        "description": "Flawless makeup application for events and special occasions",
+        "duration": 90,
+        "price": "600.00",
+        "image_url": "https://images.unsplash.com/photo-1512496015859-f55c42f17c6f?w=400",
+        "is_active": true
+    }
+},
+{
+    "model": "services.service",
+    "pk": 4,
+    "fields": {
+        "name": "Skin Rejuvenation Facial",
+        "category": "SKIN",
+        "description": "Advanced facial treatments for radiant, healthy skin",
+        "duration": 75,
+        "price": "550.00",
+        "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400",
+        "is_active": true
+    }
+},
+{
+    "model": "services.service",
+    "pk": 5,
+    "fields": {
+        "name": "Full Body Relaxation Massage",
+        "category": "SPA",
+        "description": "Therapeutic massage for complete relaxation and stress relief",
+        "duration": 60,
+        "price": "400.00",
+        "image_url": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400",
+        "is_active": true
+    }
+},
+{
+    "model": "services.service",
+    "pk": 6,
+    "fields": {
+        "name": "Complete Bridal Package",
+        "category": "BRIDAL",
+        "description": "Full bridal package including hair, makeup, and trial sessions",
+        "duration": 180,
+        "price": "1500.00",
+        "image_url": "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400",
+        "is_active": true
+    }
+}
+]
