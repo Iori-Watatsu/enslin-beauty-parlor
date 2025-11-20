@@ -1,3 +1,9 @@
+#!/bin/bash
+
+echo "🚀 Fixing duplicate menu issue..."
+
+# Fix the duplicate menu in the frontend HTML
+cat > frontend/index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1064,3 +1070,16 @@
     </script>
 </body>
 </html>
+EOF
+
+# Copy to backend templates
+cp frontend/index.html backend/apps/templates/
+
+echo "✅ Fixed duplicate menu issue!"
+echo "🚀 Menu now works properly - no duplicates!"
+echo "📱 Burger menu shows on mobile, desktop menu on desktop"
+echo "🎨 Cleaned up styles and fixed layout"
+
+echo ""
+echo "🌐 Start your server: ./start_production.sh"
+echo "📦 Ready to push to GitHub!"

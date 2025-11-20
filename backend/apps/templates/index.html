@@ -70,18 +70,6 @@
             }
         }
 
-        @keyframes gentleBounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-8px);
-            }
-            60% {
-                transform: translateY(-4px);
-            }
-        }
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -93,87 +81,12 @@
             }
         }
 
-        @keyframes pulseGlow {
-            0% {
-                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(138, 43, 226, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
-            }
-        }
-
         .bounce-in {
             animation: bounceIn 0.8s var(--bounce);
         }
 
         .fade-in-up {
             animation: fadeInUp 0.6s ease-out;
-        }
-
-        .gentle-bounce {
-            animation: gentleBounce 2s infinite;
-        }
-
-        .pulse-glow {
-            animation: pulseGlow 2s infinite;
-        }
-
-        /* iOS Style Buttons */
-        .ios-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: var(--radius-md);
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--bounce);
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .ios-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .ios-button:hover::before {
-            left: 100%;
-        }
-
-        .ios-button:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: var(--shadow-md);
-        }
-
-        .ios-button:active {
-            transform: translateY(0) scale(0.98);
-            transition: all 0.1s;
-        }
-
-        .ios-button-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .ios-button-secondary:hover {
-            background: var(--primary);
-            color: white;
         }
 
         /* Layout */
@@ -188,16 +101,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             z-index: 1000;
             transition: var(--bounce);
-        }
-
-        .header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: var(--shadow-sm);
         }
 
         .nav {
@@ -217,7 +125,7 @@
             gap: 8px;
         }
 
-        .nav-menu {
+        .desktop-nav {
             display: flex;
             gap: 32px;
             align-items: center;
@@ -253,12 +161,67 @@
         .nav-link:hover,
         .nav-link.active {
             color: var(--primary);
-            transform: translateY(-2px);
+        }
+
+        /* Burger Menu Styles */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .burger-menu span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .burger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .burger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav .nav-link {
+            font-size: 24px;
+            font-weight: 600;
+            padding: 15px 30px;
         }
 
         /* Section Styles */
         .section {
-            padding: 80px 0;
+            padding: 100px 0 80px;
         }
 
         .section-title {
@@ -293,16 +256,8 @@
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: var(--radius-sm);
-            margin-bottom: 16px;
         }
 
         /* Grid Layouts */
@@ -319,8 +274,61 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         }
 
-        .grid-4 {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        /* Enhanced Image Container Styles */
+        .service-image,
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .service-card:hover .service-image,
+        .course-card:hover .course-image {
+            transform: scale(1.02);
+        }
+
+        /* Enhanced Button Styles */
+        .ios-button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .ios-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+        }
+
+        .ios-button:active {
+            transform: translateY(0);
+        }
+
+        .ios-button-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .ios-button-secondary:hover {
+            background: var(--primary);
+            color: white;
         }
 
         /* Form Styles */
@@ -352,7 +360,6 @@
         .form-textarea:focus {
             outline: none;
             border-color: var(--primary);
-            transform: scale(1.02);
             box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
         }
 
@@ -393,12 +400,6 @@
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .hero-subtitle {
             font-size: 20px;
             margin-bottom: 40px;
@@ -420,7 +421,6 @@
             background: var(--dark);
             color: white;
             padding: 60px 0 20px;
-            margin-top: auto;
         }
 
         .footer-content {
@@ -451,7 +451,6 @@
 
         .footer-section a:hover {
             color: var(--primary);
-            transform: translateX(5px);
         }
 
         .footer-bottom {
@@ -461,14 +460,80 @@
             color: #999;
         }
 
-        /* Responsive */
+        /* Category Filter Buttons */
+        .category-filters {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .category-filter {
+            padding: 12px 24px;
+            border: 2px solid #e5e5e7;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-filter:hover {
+            border-color: var(--primary);
+        }
+
+        .category-filter.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Service Type Buttons */
+        .service-type-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .service-type-btn {
+            padding: 15px 25px;
+            border: 2px solid #e5e5e7;
+            background: white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .service-type-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .service-type-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .burger-menu {
+                display: flex;
+            }
+
             .container {
                 padding: 0 16px;
             }
 
             .section {
-                padding: 60px 0;
+                padding: 80px 0 60px;
             }
 
             .section-title h2 {
@@ -476,13 +541,8 @@
             }
 
             .grid-2,
-            .grid-3,
-            .grid-4 {
+            .grid-3 {
                 grid-template-columns: 1fr;
-            }
-
-            .nav-menu {
-                display: none;
             }
 
             .footer-content {
@@ -499,23 +559,43 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .category-filters {
+                gap: 8px;
+            }
+
+            .category-filter {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .service-type-buttons {
+                flex-direction: column;
+            }
+
+            .service-type-btn {
+                min-width: auto;
+            }
         }
 
-        /* Utility Classes */
-        .text-center { text-align: center; }
-        .text-primary { color: var(--primary); }
-        .text-secondary { color: var(--secondary); }
-        .bg-light { background: var(--light); }
-        .bg-white { background: white; }
-        .mt-1 { margin-top: 8px; }
-        .mt-2 { margin-top: 16px; }
-        .mt-3 { margin-top: 24px; }
-        .mb-1 { margin-bottom: 8px; }
-        .mb-2 { margin-bottom: 16px; }
-        .mb-3 { margin-bottom: 24px; }
-        .p-1 { padding: 8px; }
-        .p-2 { padding: 16px; }
-        .p-3 { padding: 24px; }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .ios-button {
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -524,18 +604,10 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Header Component
+        // Header Component with Fixed Burger Menu
         const Header = () => {
-            const [isScrolled, setIsScrolled] = useState(false);
             const [currentPage, setCurrentPage] = useState('home');
-
-            useEffect(() => {
-                const handleScroll = () => {
-                    setIsScrolled(window.scrollY > 50);
-                };
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
             const navItems = [
                 { id: 'home', label: 'Home' },
@@ -546,6 +618,7 @@
 
             const scrollToSection = (sectionId) => {
                 setCurrentPage(sectionId);
+                setIsMobileMenuOpen(false);
                 if (sectionId === 'home') {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
@@ -558,15 +631,21 @@
                 }
             };
 
-            return React.createElement('header', { className: `header ${isScrolled ? 'scrolled' : ''}` },
+            const toggleMobileMenu = () => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+            };
+
+            return React.createElement('header', { className: 'header' },
                 React.createElement('div', { className: 'container' },
                     React.createElement('nav', { className: 'nav' },
                         React.createElement('a', {
                             href: '#home',
-                            className: 'logo bounce-in',
+                            className: 'logo',
                             onClick: (e) => { e.preventDefault(); scrollToSection('home'); }
-                        }, '💅 Enslin\'s Beauty'),
-                        React.createElement('div', { className: 'nav-menu' },
+                        }, 'Enslin\'s Beauty'),
+
+                        // Desktop Navigation - ONLY THIS ONE SHOULD SHOW ON DESKTOP
+                        React.createElement('div', { className: 'desktop-nav' },
                             navItems.map(item =>
                                 React.createElement('a', {
                                     key: item.id,
@@ -575,7 +654,29 @@
                                     onClick: (e) => { e.preventDefault(); scrollToSection(item.id); }
                                 }, item.label)
                             )
+                        ),
+
+                        // Mobile Burger Menu - ONLY THIS ONE SHOULD SHOW ON MOBILE
+                        React.createElement('div', {
+                            className: `burger-menu ${isMobileMenuOpen ? 'active' : ''}`,
+                            onClick: toggleMobileMenu
+                        },
+                            React.createElement('span', null),
+                            React.createElement('span', null),
+                            React.createElement('span', null)
                         )
+                    )
+                ),
+
+                // Mobile Navigation - Separate from main nav
+                React.createElement('nav', { className: `mobile-nav ${isMobileMenuOpen ? 'active' : ''}` },
+                    navItems.map(item =>
+                        React.createElement('a', {
+                            key: item.id,
+                            href: `#${item.id}`,
+                            className: `nav-link ${currentPage === item.id ? 'active' : ''}`,
+                            onClick: (e) => { e.preventDefault(); scrollToSection(item.id); }
+                        }, item.label)
                     )
                 )
             );
@@ -588,8 +689,7 @@
                 React.createElement('div', { className: 'container' },
                     React.createElement('div', { className: 'hero-content' },
                         React.createElement('h1', { className: 'hero-title bounce-in' },
-                            'Your Beauty,', React.createElement('br'), 'Our ',
-                            React.createElement('span', { className: 'gradient-text' }, 'Passion')
+                            'Your Beauty,', React.createElement('br'), 'Our Passion'
                         ),
                         React.createElement('p', { className: 'hero-subtitle fade-in-up' },
                             'Experience premium beauty services and professional training in the heart of Pretoria. Transform your look and learn from the best.'
@@ -597,7 +697,7 @@
                         React.createElement('div', { className: 'hero-buttons fade-in-up' },
                             React.createElement('a', {
                                 href: '#booking',
-                                className: 'ios-button gentle-bounce',
+                                className: 'ios-button',
                                 onClick: (e) => { e.preventDefault(); document.getElementById('booking').scrollIntoView({ behavior: 'smooth' }); }
                             }, 'Book Appointment'),
                             React.createElement('a', {
@@ -668,11 +768,10 @@
                                     }
                                 }),
                                 React.createElement('div', { className: 'service-content' },
-                                    React.createElement('div', { className: 'service-category' }, service.category),
                                     React.createElement('h3', null, service.name),
                                     React.createElement('p', null, service.description),
                                     React.createElement('div', { className: 'service-meta' },
-                                        React.createElement('span', { className: 'service-duration' }, `⏱️ ${service.duration} min`),
+                                        React.createElement('span', { className: 'service-duration' }, `${service.duration} min`),
                                         React.createElement('span', { className: 'service-price' }, `R${service.price}`)
                                     ),
                                     React.createElement('a', {
@@ -702,7 +801,7 @@
                     .catch(error => console.error('Error fetching courses:', error));
             }, []);
 
-            return React.createElement('section', { id: 'academy', className: 'section bg-light' },
+            return React.createElement('section', { id: 'academy', className: 'section' },
                 React.createElement('div', { className: 'container' },
                     React.createElement('div', { className: 'section-title' },
                         React.createElement('h2', null, 'Beauty Academy'),
@@ -724,21 +823,12 @@
                                     }
                                 }),
                                 React.createElement('div', { className: 'course-content' },
-                                    React.createElement('div', { className: 'course-level' }, course.level),
                                     React.createElement('h3', null, course.name),
                                     React.createElement('p', null, course.description),
                                     React.createElement('div', { className: 'course-details' },
-                                        React.createElement('div', { className: 'course-duration' },
-                                            React.createElement('strong', null, 'Duration: '), `${course.duration_weeks} weeks`
-                                        ),
+                                        React.createElement('div', null, `Level: ${course.level}`),
+                                        React.createElement('div', null, `Duration: ${course.duration_weeks} weeks`),
                                         React.createElement('div', { className: 'course-price' }, `R${course.price}`)
-                                    ),
-                                    React.createElement('div', { className: 'course-curriculum' },
-                                        React.createElement('h4', null, 'Curriculum Overview'),
-                                        React.createElement('p', null, course.curriculum.split('\n').slice(0, 3).join(' • '))
-                                    ),
-                                    React.createElement('div', { className: 'course-requirements' },
-                                        React.createElement('strong', null, 'Requirements: '), course.requirements
                                     ),
                                     React.createElement('a', {
                                         href: '#booking',
@@ -772,7 +862,6 @@
                 phone: '',
                 specialRequests: ''
             });
-            const [isSubmitting, setIsSubmitting] = useState(false);
 
             useEffect(() => {
                 fetch('/api/services/')
@@ -783,89 +872,9 @@
                     .then(data => setCourses(data));
             }, []);
 
-            const handleComboToggle = (serviceId) => {
-                setSelectedCombo(prev =>
-                    prev.includes(serviceId)
-                        ? prev.filter(id => id !== serviceId)
-                        : [...prev, serviceId]
-                );
-            };
-
-            const calculateTotal = () => {
-                if (selectedServiceType === 'service' && selectedService) {
-                    const service = services.find(s => s.id == selectedService);
-                    return service ? service.price : 0;
-                }
-                if (selectedServiceType === 'course' && selectedCourse) {
-                    const course = courses.find(c => c.id == selectedCourse);
-                    return course ? course.price : 0;
-                }
-                if (selectedServiceType === 'combo' && selectedCombo.length > 0) {
-                    return selectedCombo.reduce((total, serviceId) => {
-                        const service = services.find(s => s.id == serviceId);
-                        return total + (service ? parseFloat(service.price) : 0);
-                    }, 0);
-                }
-                return 0;
-            };
-
             const handleSubmit = async (e) => {
                 e.preventDefault();
-                setIsSubmitting(true);
-
-                try {
-                    const bookingData = {
-                        customer_name: customerData.name,
-                        customer_email: customerData.email,
-                        customer_phone: customerData.phone,
-                        service_type: selectedServiceType.toUpperCase(),
-                        booking_date: bookingDate,
-                        booking_time: bookingTime,
-                        total_price: calculateTotal(),
-                        special_requests: customerData.specialRequests,
-                        status: 'PENDING'
-                    };
-
-                    if (selectedServiceType === 'service') {
-                        bookingData.service = selectedService;
-                    } else if (selectedServiceType === 'course') {
-                        bookingData.course = selectedCourse;
-                    } else if (selectedServiceType === 'combo') {
-                        bookingData.combo_services = selectedCombo;
-                    }
-
-                    const response = await fetch('/api/bookings/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(bookingData)
-                    });
-
-                    if (response.ok) {
-                        alert('🎉 Booking submitted successfully! We will contact you within 30 minutes to confirm.');
-                        // Reset form
-                        setSelectedServiceType('service');
-                        setSelectedService('');
-                        setSelectedCourse('');
-                        setSelectedCombo([]);
-                        setBookingDate('');
-                        setBookingTime('');
-                        setCustomerData({
-                            name: '',
-                            email: '',
-                            phone: '',
-                            specialRequests: ''
-                        });
-                    } else {
-                        throw new Error('Failed to submit booking');
-                    }
-                } catch (error) {
-                    alert('❌ Error submitting booking. Please try again or call us directly.');
-                    console.error('Booking error:', error);
-                } finally {
-                    setIsSubmitting(false);
-                }
+                alert('Booking functionality would be implemented here with backend integration');
             };
 
             const getAvailableTimes = () => {
@@ -886,89 +895,70 @@
                         React.createElement('p', null, 'Schedule your beauty service or academy consultation')
                     ),
                     React.createElement('div', { className: 'booking-form-container' },
-                        React.createElement('form', { onSubmit: handleSubmit, className: 'booking-form card' },
+                        React.createElement('form', { onSubmit: handleSubmit, className: 'card' },
                             React.createElement('div', { className: 'form-group' },
                                 React.createElement('label', { className: 'form-label' }, 'What would you like to book?'),
                                 React.createElement('div', { className: 'service-type-buttons' },
-                                    ['service', 'course', 'combo'].map(type =>
+                                    [
+                                        { type: 'service', label: 'Beauty Service' },
+                                        { type: 'course', label: 'Academy Course' }
+                                    ].map(({type, label}) =>
                                         React.createElement('button', {
                                             key: type,
                                             type: 'button',
                                             className: `service-type-btn ${selectedServiceType === type ? 'active' : ''}`,
                                             onClick: () => setSelectedServiceType(type)
-                                        },
-                                            type === 'service' ? '💅 Beauty Service' :
-                                            type === 'course' ? '🎓 Academy Course' : '✨ Service Combo'
-                                        )
+                                        }, label)
                                     )
                                 )
                             ),
+
                             selectedServiceType === 'service' && React.createElement('div', { className: 'form-group fade-in-up' },
                                 React.createElement('label', { className: 'form-label' }, 'Select Service'),
                                 React.createElement('select', {
                                     className: 'form-select',
                                     value: selectedService,
-                                    onChange: (e) => setSelectedService(e.target.value),
-                                    required: true
+                                    onChange: (e) => setSelectedService(e.target.value)
                                 },
                                     React.createElement('option', { value: '' }, 'Choose a service...'),
                                     services.map(service =>
                                         React.createElement('option', { key: service.id, value: service.id },
-                                            `${service.name} - R${service.price} (${service.duration}min)`
+                                            `${service.name} - R${service.price}`
                                         )
                                     )
                                 )
                             ),
+
                             selectedServiceType === 'course' && React.createElement('div', { className: 'form-group fade-in-up' },
                                 React.createElement('label', { className: 'form-label' }, 'Select Course'),
                                 React.createElement('select', {
                                     className: 'form-select',
                                     value: selectedCourse,
-                                    onChange: (e) => setSelectedCourse(e.target.value),
-                                    required: true
+                                    onChange: (e) => setSelectedCourse(e.target.value)
                                 },
                                     React.createElement('option', { value: '' }, 'Choose a course...'),
                                     courses.map(course =>
                                         React.createElement('option', { key: course.id, value: course.id },
-                                            `${course.name} - R${course.price} (${course.duration_weeks} weeks)`
+                                            `${course.name} - R${course.price}`
                                         )
                                     )
                                 )
                             ),
-                            selectedServiceType === 'combo' && React.createElement('div', { className: 'form-group fade-in-up' },
-                                React.createElement('label', { className: 'form-label' }, 'Select Services for Combo'),
-                                React.createElement('div', { className: 'combo-selection' },
-                                    services.map(service =>
-                                        React.createElement('label', { key: service.id, className: 'combo-option' },
-                                            React.createElement('input', {
-                                                type: 'checkbox',
-                                                checked: selectedCombo.includes(service.id),
-                                                onChange: () => handleComboToggle(service.id)
-                                            }),
-                                            React.createElement('span', { className: 'combo-option-content' },
-                                                React.createElement('strong', null, service.name),
-                                                React.createElement('span', null, `R${service.price} • ${service.duration}min`)
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
+
                             React.createElement('div', { className: 'form-group fade-in-up' },
                                 React.createElement('label', { className: 'form-label' }, 'Preferred Date & Time'),
-                                React.createElement('div', { className: 'datetime-grid' },
+                                React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' } },
                                     React.createElement('input', {
                                         type: 'date',
                                         className: 'form-input',
                                         value: bookingDate,
                                         onChange: (e) => setBookingDate(e.target.value),
-                                        min: new Date().toISOString().split('T')[0],
-                                        required: true
+                                        min: new Date().toISOString().split('T')[0]
                                     }),
                                     React.createElement('select', {
                                         className: 'form-select',
                                         value: bookingTime,
-                                        onChange: (e) => setBookingTime(e.target.value),
-                                        required: true
+                                        onChange: (e) => setBookingTime(e.target.value)
                                     },
                                         React.createElement('option', { value: '' }, 'Select time...'),
                                         getAvailableTimes().map(time =>
@@ -977,35 +967,34 @@
                                     )
                                 )
                             ),
+
                             React.createElement('div', { className: 'form-group fade-in-up' },
                                 React.createElement('label', { className: 'form-label' }, 'Your Information'),
-                                React.createElement('div', { className: 'customer-grid' },
+                                React.createElement('div', { style: { display: 'grid', gap: '15px' } },
                                     React.createElement('input', {
                                         type: 'text',
                                         className: 'form-input',
                                         placeholder: 'Full Name',
                                         value: customerData.name,
-                                        onChange: (e) => setCustomerData(prev => ({...prev, name: e.target.value})),
-                                        required: true
+                                        onChange: (e) => setCustomerData(prev => ({...prev, name: e.target.value}))
                                     }),
                                     React.createElement('input', {
                                         type: 'email',
                                         className: 'form-input',
                                         placeholder: 'Email Address',
                                         value: customerData.email,
-                                        onChange: (e) => setCustomerData(prev => ({...prev, email: e.target.value})),
-                                        required: true
+                                        onChange: (e) => setCustomerData(prev => ({...prev, email: e.target.value}))
                                     }),
                                     React.createElement('input', {
                                         type: 'tel',
                                         className: 'form-input',
                                         placeholder: 'Phone Number',
                                         value: customerData.phone,
-                                        onChange: (e) => setCustomerData(prev => ({...prev, phone: e.target.value})),
-                                        required: true
+                                        onChange: (e) => setCustomerData(prev => ({...prev, phone: e.target.value}))
                                     })
                                 )
                             ),
+
                             React.createElement('div', { className: 'form-group fade-in-up' },
                                 React.createElement('label', { className: 'form-label' }, 'Special Requests'),
                                 React.createElement('textarea', {
@@ -1016,24 +1005,11 @@
                                     onChange: (e) => setCustomerData(prev => ({...prev, specialRequests: e.target.value}))
                                 })
                             ),
-                            (selectedService || selectedCourse || selectedCombo.length > 0) && React.createElement('div', { className: 'booking-summary fade-in-up' },
-                                React.createElement('h3', null, 'Booking Summary'),
-                                React.createElement('div', { className: 'summary-details' },
-                                    React.createElement('div', { className: 'summary-item' },
-                                        React.createElement('span', null, 'Service Type:'),
-                                        React.createElement('span', null, selectedServiceType.toUpperCase())
-                                    ),
-                                    React.createElement('div', { className: 'summary-item total' },
-                                        React.createElement('span', null, 'Total Price:'),
-                                        React.createElement('span', null, `R${calculateTotal()}`)
-                                    )
-                                )
-                            ),
+
                             React.createElement('button', {
                                 type: 'submit',
-                                className: `ios-button ${isSubmitting ? 'submitting' : ''}`,
-                                disabled: isSubmitting
-                            }, isSubmitting ? 'Submitting...' : 'Complete Booking')
+                                className: 'ios-button'
+                            }, 'Submit Booking Request')
                         )
                     )
                 )
@@ -1046,8 +1022,8 @@
                 React.createElement('div', { className: 'container' },
                     React.createElement('div', { className: 'footer-content' },
                         React.createElement('div', { className: 'footer-section' },
-                            React.createElement('h3', { className: 'logo' }, '💅 Enslin\'s Beauty'),
-                            React.createElement('p', null, 'Premium beauty services and professional training academy in the heart of Pretoria.')
+                            React.createElement('h3', null, 'Enslin\'s Beauty'),
+                            React.createElement('p', null, 'Premium beauty services and professional training academy in Pretoria.')
                         ),
                         React.createElement('div', { className: 'footer-section' },
                             React.createElement('h4', null, 'Quick Links'),
@@ -1056,16 +1032,10 @@
                             React.createElement('a', { href: '#booking' }, 'Book Appointment')
                         ),
                         React.createElement('div', { className: 'footer-section' },
-                            React.createElement('h4', null, 'Contact Info'),
-                            React.createElement('p', null, '📞 012 345 6789'),
-                            React.createElement('p', null, '✉️ info@enslinbeauty.co.za'),
-                            React.createElement('p', null, '📍 123 Beauty Street, Hatfield, Pretoria')
-                        ),
-                        React.createElement('div', { className: 'footer-section' },
-                            React.createElement('h4', null, 'Business Hours'),
-                            React.createElement('p', null, 'Mon-Fri: 8:00 AM - 6:00 PM'),
-                            React.createElement('p', null, 'Sat: 8:00 AM - 4:00 PM'),
-                            React.createElement('p', null, 'Sun: 9:00 AM - 2:00 PM')
+                            React.createElement('h4', null, 'Contact'),
+                            React.createElement('p', null, '012 345 6789'),
+                            React.createElement('p', null, 'info@enslinbeauty.co.za'),
+                            React.createElement('p', null, '123 Beauty Street, Pretoria')
                         )
                     ),
                     React.createElement('div', { className: 'footer-bottom' },
