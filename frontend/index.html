@@ -872,9 +872,86 @@
                     .then(data => setCourses(data));
             }, []);
 
+            const calculateTotal = () => {
+                if (selectedServiceType === 'service' && selectedService) {
+                    const service = services.find(s => s.id == selectedService);
+                    return service ? service.price : 0;
+                }
+                if (selectedServiceType === 'course' && selectedCourse) {
+                    const course = courses.find(c => c.id == selectedCourse);
+                    return course ? course.price : 0;
+                }
+                return 0;
+            };
+
             const handleSubmit = async (e) => {
                 e.preventDefault();
-                alert('Booking functionality would be implemented here with backend integration');
+                
+                // Basic validation
+                if (!customerData.name || !customerData.email || !customerData.phone || !bookingDate || !bookingTime) {
+                    alert('Please fill in all required fields: Name, Email, Phone, Date, and Time');
+                    return;
+                }
+            
+                if ((selectedServiceType === 'service' && !selectedService) || 
+                    (selectedServiceType === 'course' && !selectedCourse)) {
+                    alert('Please select a service or course');
+                    return;
+                }
+            
+                try {
+                    const bookingData = {
+                        customer_name: customerData.name,
+                        customer_email: customerData.email,
+                        customer_phone: customerData.phone,
+                        service_type: selectedServiceType.toUpperCase(),
+                        booking_date: bookingDate,
+                        booking_time: bookingTime,
+                        total_price: calculateTotal(),
+                        special_requests: customerData.specialRequests,
+                        status: 'PENDING'
+                    };
+            
+                    // Add service or course ID based on selection
+                    if (selectedServiceType === 'service') {
+                        bookingData.service = selectedService;
+                    } else if (selectedServiceType === 'course') {
+                        bookingData.course = selectedCourse;
+                    }
+            
+                    // THIS IS THE ACTUAL API CALL TO YOUR BACKEND
+                    const response = await fetch('https://enslin-beauty-parlor.onrender.com/api/bookings/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(bookingData)
+                    });
+            
+                    if (response.ok) {
+                        alert('🎉 Booking submitted successfully! We will contact you within 30 minutes to confirm.');
+                        
+                        // Reset form after successful submission
+                        setSelectedServiceType('service');
+                        setSelectedService('');
+                        setSelectedCourse('');
+                        setSelectedCombo([]);
+                        setBookingDate('');
+                        setBookingTime('');
+                        setCustomerData({
+                            name: '',
+                            email: '',
+                            phone: '',
+                            specialRequests: ''
+                        });
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.detail || 'Failed to submit booking');
+                    }
+                } catch (error) {
+                    console.error('Booking error:', error);
+                    alert('❌ Error submitting booking. Please try again or call us directly.');
+                }
             };
 
             const getAvailableTimes = () => {
