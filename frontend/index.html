@@ -900,24 +900,31 @@
                 }
             
                 try {
+                    // Format the booking data exactly as backend expects
                     const bookingData = {
                         customer_name: customerData.name,
                         customer_email: customerData.email,
                         customer_phone: customerData.phone,
                         service_type: selectedServiceType.toUpperCase(),
-                        booking_date: bookingDate,
-                        booking_time: bookingTime,
+                        booking_date: bookingDate, // Already in YYYY-MM-DD format from date input
+                        booking_time: bookingTime + ':00', // Add seconds to make HH:MM:SS format
+                        duration: 60, // Set a default duration (60 minutes)
                         total_price: calculateTotal(),
-                        special_requests: customerData.specialRequests,
+                        special_requests: customerData.specialRequests || '', // Ensure it's never null
                         status: 'PENDING'
                     };
             
-                    // Add service or course ID based on selection
-                    if (selectedServiceType === 'service') {
-                        bookingData.service = selectedService;
-                    } else if (selectedServiceType === 'course') {
-                        bookingData.course = selectedCourse;
+                    // Add service or course ID based on selection - ensure they are numbers
+                    if (selectedServiceType === 'service' && selectedService) {
+                        bookingData.service = parseInt(selectedService); // Convert to number
+                    } else if (selectedServiceType === 'course' && selectedCourse) {
+                        bookingData.course = parseInt(selectedCourse); // Convert to number
                     }
+            
+                    // Set default values for fields that can't be null
+                    bookingData.combo_services = []; // Empty array instead of null
+            
+                    console.log('Sending booking data:', bookingData); // Debug log
             
                     // THIS IS THE ACTUAL API CALL TO YOUR BACKEND
                     const response = await fetch('https://enslin-beauty-parlor.onrender.com/api/bookings/', {
@@ -928,7 +935,12 @@
                         body: JSON.stringify(bookingData)
                     });
             
+                    console.log('Response status:', response.status); // Debug log
+            
                     if (response.ok) {
+                        const result = await response.json();
+                        console.log('Success response:', result); // Debug log
+                        
                         alert('🎉 Booking submitted successfully! We will contact you within 30 minutes to confirm.');
                         
                         // Reset form after successful submission
@@ -945,12 +957,23 @@
                             specialRequests: ''
                         });
                     } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.detail || 'Failed to submit booking');
+                        // Get detailed error message
+                        const errorText = await response.text();
+                        console.error('Error response:', errorText);
+                        
+                        let errorMessage = 'Failed to submit booking';
+                        try {
+                            const errorData = JSON.parse(errorText);
+                            errorMessage = errorData.detail || errorMessage;
+                        } catch (e) {
+                            errorMessage = errorText || errorMessage;
+                        }
+                        
+                        throw new Error(errorMessage);
                     }
                 } catch (error) {
                     console.error('Booking error:', error);
-                    alert('❌ Error submitting booking. Please try again or call us directly.');
+                    alert(`❌ Error: ${error.message}. Please try again or call us directly.`);
                 }
             };
 
