@@ -3,8 +3,15 @@ services:
     name: enslin-beauty-backend
     env: python
     plan: free
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
+    startCommand: "python manage.py migrate && python -c \"
+from django.contrib.auth.models import User
+if not User.objects.filter(username='admin').exists():
+    User.objects.create_superuser('admin', 'admin@enslinbeauty.com', 'KamoAdmin2024')
+    print('✅ Admin user created successfully')
+else:
+    print('ℹ️ Admin user already exists')
+\" && gunicorn core.wsgi:application --bind 0.0.0.0:\$PORT"
     envVars:
       - key: SECRET_KEY
         generateValue: true
