@@ -603,6 +603,8 @@
 
     <script type="text/babel">
         const { useState, useEffect } = React;
+        // Global state setters for booking
+        let setSelectedServiceType, setSelectedService, setSelectedCourse;
 
         // Header Component with Fixed Burger Menu
         const Header = () => {
@@ -815,29 +817,19 @@
         };
         // Booking Section
         const BookingSection = () => {
-            const [services, setServices] = useState([]);
-            const [courses, setCourses] = useState([]);
-            const [selectedServiceType, setSelectedServiceType] = useState('service');
-            const [selectedService, setSelectedService] = useState('');
-            const [selectedCourse, setSelectedCourse] = useState('');
-            const [selectedCombo, setSelectedCombo] = useState([]);
-            const [bookingDate, setBookingDate] = useState('');
-            const [bookingTime, setBookingTime] = useState('');
-            const [customerData, setCustomerData] = useState({
-                name: '',
-                email: '',
-                phone: '',
-                specialRequests: ''
-            });
-
-            useEffect(() => {
-                fetch('https://enslin-beauty-parlor.onrender.com/api/services/')
-                    .then(response => response.json())
-                    .then(data => setServices(data));
-                fetch('https://enslin-beauty-parlor.onrender.com/api/courses/')
-                    .then(response => response.json())
-                    .then(data => setCourses(data));
-            }, []);
+        const [services, setServices] = useState([]);
+        const [courses, setCourses] = useState([]);
+        const [selectedServiceType, setSelectedServiceTypeState] = useState('service');
+        const [selectedService, setSelectedServiceState] = useState('');
+        const [selectedCourse, setSelectedCourseState] = useState('');
+        // ... your other state variables
+    
+        // Set the global variables for booking state
+        useEffect(() => {
+            setSelectedServiceType = setSelectedServiceTypeState;
+            setSelectedService = setSelectedServiceState;
+            setSelectedCourse = setSelectedCourseState;
+        }, []);
 
             const calculateTotal = () => {
                 if (selectedServiceType === 'service' && selectedService) {
@@ -1109,20 +1101,6 @@
                         React.createElement('p', null, `© ${new Date().getFullYear()} Enslin's Beauty Parlor. All rights reserved.`)
                     )
                 )
-            );
-        };
-
-        // Main App Component
-        const App = () => {
-            return React.createElement('div', { className: 'app' },
-                React.createElement(Header),
-                React.createElement('main', null,
-                    React.createElement(HeroSection),
-                    React.createElement(ServicesSection),
-                    React.createElement(AcademySection),
-                    React.createElement(BookingSection)
-                ),
-                React.createElement(Footer)
             );
         };
 
