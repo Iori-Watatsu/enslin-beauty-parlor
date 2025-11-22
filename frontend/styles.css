@@ -264,3 +264,80 @@
         font-size: 16px;
     }
 }
+
+/* Services and Courses Grid Layout */
+.services-grid,
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.service-card,
+.course-card {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--bounce);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.service-card:hover,
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.service-content,
+.course-content {
+    padding: 24px;
+}
+
+.service-content h3,
+.course-content h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--dark);
+}
+
+.service-description,
+.course-description {
+    color: var(--gray);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.service-details,
+.course-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px 0;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.service-duration,
+.service-price,
+.course-level,
+.course-duration,
+.course-price {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.service-price,
+.course-price {
+    font-size: 20px;
+    color: var(--secondary);
+}
+
+.booking-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
