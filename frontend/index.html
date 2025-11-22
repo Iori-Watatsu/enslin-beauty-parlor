@@ -711,132 +711,100 @@
             );
         };
 
-        // Services Section
+        // Services Section - Fixed to use actual API data
         const ServicesSection = () => {
             const [services, setServices] = useState([]);
-            const [filter, setFilter] = useState('all');
-
+            const [courses, setCourses] = useState([]);
+        
             useEffect(() => {
                 fetch('https://enslin-beauty-parlor.onrender.com/api/services/')
                     .then(response => response.json())
-                    .then(data => setServices(data))
-                    .catch(error => console.error('Error fetching services:', error));
+                    .then(data => setServices(data));
+                fetch('https://enslin-beauty-parlor.onrender.com/api/courses/')
+                    .then(response => response.json())
+                    .then(data => setCourses(data));
             }, []);
-
-            const categories = [
-                { id: 'all', name: 'All Services' },
-                { id: 'HAIR', name: 'Hair Services' },
-                { id: 'NAILS', name: 'Nail Services' },
-                { id: 'MAKEUP', name: 'Makeup Services' },
-                { id: 'SKIN', name: 'Skin Treatments' },
-                { id: 'SPA', name: 'Spa Services' },
-                { id: 'BRIDAL', name: 'Bridal Packages' }
-            ];
-
-            const filteredServices = filter === 'all'
-                ? services
-                : services.filter(service => service.category === filter);
-
+        
+            const scrollToBooking = (id, type) => {
+                document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+                
+                // Set the selected service/course in the booking form
+                setTimeout(() => {
+                    if (type === 'service') {
+                        setSelectedServiceType('service');
+                        setSelectedService(id.toString());
+                    } else {
+                        setSelectedServiceType('course');
+                        setSelectedCourse(id.toString());
+                    }
+                }, 500);
+            };
+        
             return React.createElement('section', { id: 'services', className: 'section' },
                 React.createElement('div', { className: 'container' },
+                    // Services Section
                     React.createElement('div', { className: 'section-title' },
-                        React.createElement('h2', null, 'Our Premium Services'),
-                        React.createElement('p', null, 'Experience the finest beauty treatments with our expert team')
+                        React.createElement('h2', null, 'Our Services'),
+                        React.createElement('p', null, 'Professional beauty services tailored for you')
                     ),
-                    React.createElement('div', { className: 'category-filters' },
-                        categories.map(category =>
-                            React.createElement('button', {
-                                key: category.id,
-                                className: `category-filter ${filter === category.id ? 'active' : ''}`,
-                                onClick: () => setFilter(category.id)
-                            }, category.name)
-                        )
-                    ),
-                    React.createElement('div', { className: 'grid grid-3' },
-                        filteredServices.map((service, index) =>
-                            React.createElement('div', {
-                                key: service.id,
-                                className: 'service-card card fade-in-up',
-                                style: { animationDelay: `${index * 0.1}s` }
-                            },
-                                React.createElement('img', {
-                                    src: service.image_url,
-                                    alt: service.name,
-                                    className: 'service-image',
-                                    onError: (e) => {
-                                        e.target.src = 'https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-                                    }
-                                }),
+                    
+                    React.createElement('div', { className: 'services-grid' },
+                        services.map(service => 
+                            React.createElement('div', { key: service.id, className: 'service-card fade-in-up' },
+                                React.createElement('div', { className: 'service-image' },
+                                    React.createElement('img', { 
+                                        src: service.image_url, 
+                                        alt: service.name,
+                                        onError: (e) => {
+                                            e.target.src = 'https://via.placeholder.com/400x300?text=Beauty+Service';
+                                        }
+                                    })
+                                ),
                                 React.createElement('div', { className: 'service-content' },
                                     React.createElement('h3', null, service.name),
-                                    React.createElement('p', null, service.description),
-                                    React.createElement('div', { className: 'service-meta' },
+                                    React.createElement('p', { className: 'service-description' }, service.description),
+                                    React.createElement('div', { className: 'service-details' },
                                         React.createElement('span', { className: 'service-duration' }, `${service.duration} min`),
                                         React.createElement('span', { className: 'service-price' }, `R${service.price}`)
                                     ),
-                                    React.createElement('a', {
-                                        href: '#booking',
+                                    React.createElement('button', { 
                                         className: 'ios-button',
-                                        onClick: (e) => {
-                                            e.preventDefault();
-                                            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
-                                        }
+                                        onClick: () => scrollToBooking(service.id, 'service')
                                     }, 'Book Now')
                                 )
                             )
                         )
-                    )
-                )
-            );
-        };
-
-        // Academy Section
-        const AcademySection = () => {
-            const [courses, setCourses] = useState([]);
-
-            useEffect(() => {
-                fetch('https://enslin-beauty-parlor.onrender.com/api/courses/')
-                    .then(response => response.json())
-                    .then(data => setCourses(data))
-                    .catch(error => console.error('Error fetching courses:', error));
-            }, []);
-
-            return React.createElement('section', { id: 'academy', className: 'section' },
-                React.createElement('div', { className: 'container' },
-                    React.createElement('div', { className: 'section-title' },
+                    ),
+        
+                    // Academy Courses Section
+                    React.createElement('div', { className: 'section-title', style: { marginTop: '80px' } },
                         React.createElement('h2', null, 'Beauty Academy'),
                         React.createElement('p', null, 'Transform your passion into a profession with our expert-led courses')
                     ),
-                    React.createElement('div', { className: 'grid grid-2' },
-                        courses.map((course, index) =>
-                            React.createElement('div', {
-                                key: course.id,
-                                className: 'course-card card fade-in-up',
-                                style: { animationDelay: `${index * 0.1}s` }
-                            },
-                                React.createElement('img', {
-                                    src: course.image_url,
-                                    alt: course.name,
-                                    className: 'course-image',
-                                    onError: (e) => {
-                                        e.target.src = 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-                                    }
-                                }),
+                    
+                    React.createElement('div', { className: 'courses-grid' },
+                        courses.map(course => 
+                            React.createElement('div', { key: course.id, className: 'course-card fade-in-up' },
+                                React.createElement('div', { className: 'course-image' },
+                                    React.createElement('img', { 
+                                        src: course.image_url, 
+                                        alt: course.name,
+                                        onError: (e) => {
+                                            e.target.src = 'https://via.placeholder.com/400x300?text=Beauty+Course';
+                                        }
+                                    })
+                                ),
                                 React.createElement('div', { className: 'course-content' },
                                     React.createElement('h3', null, course.name),
-                                    React.createElement('p', null, course.description),
+                                    React.createElement('p', { className: 'course-description' }, course.description),
                                     React.createElement('div', { className: 'course-details' },
-                                        React.createElement('div', null, `Level: ${course.level}`),
-                                        React.createElement('div', null, `Duration: ${course.duration_weeks} weeks`),
-                                        React.createElement('div', { className: 'course-price' }, `R${course.price}`)
+                                        React.createElement('span', { className: 'course-level' }, `Level: ${course.level}`),
+                                        React.createElement('span', { className: 'course-duration' }, `Duration: ${course.duration_weeks} weeks`),
+                                        React.createElement('span', { className: 'course-price' }, `R${course.price}`)
                                     ),
-                                    React.createElement('a', {
-                                        href: '#booking',
+                                    React.createElement('button', { 
                                         className: 'ios-button',
-                                        onClick: (e) => {
-                                            e.preventDefault();
-                                            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
-                                        }
+                                        onClick: () => scrollToBooking(course.id, 'course')
                                     }, 'Enroll Now')
                                 )
                             )
@@ -845,7 +813,6 @@
                 )
             );
         };
-
         // Booking Section
         const BookingSection = () => {
             const [services, setServices] = useState([]);
